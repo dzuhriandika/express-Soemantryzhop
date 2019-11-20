@@ -1,0 +1,60 @@
+extends ../layout/base 
+block content 
+	section.content-header 
+		h1 
+			| Blank Page
+			small it all starts here
+		ol.breadcrumb 
+			li 
+				a(href='#') 
+					i.fa.fa-dashboard
+					| Level 
+			li.active Here 
+	section.content
+		.box
+			.box-header.with-border
+				h3.box-title
+					| Supplier
+				.box-tools.pull-right
+					button(type='button', data-widget='collapse', data-toggle='tooltip',title='collapse').btn.btn-box-tool
+						i.fa.fa-minus
+						
+			.box-body
+				form(role='form',method='post' action='/supplier/add')
+					.row
+							
+						.col-xs-6
+							.box-body
+								- if (messages.msg_error) 
+									.alert.alert-danger.alert-dismissable 
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') 
+											| ×
+										h4
+											i.icon.fa.fa-ban
+											| Alert! 
+										| !{messages.msg_error}
+								.form-group
+									label
+										| kode
+									input(type='text',value='#{kode}',name='kode',placeholder='Masukkan Kode Supplier', autofocus).form-control
+								.form-group
+									label
+										| nama
+									input(type='text',value='#{nama}',name='nama',placeholder='Masukkan Nama Supplier').form-control
+								.form-group
+									label
+										| alamat
+									input(type='text',value='#{alamat}',name='alamat',placeholder='Masukkan Alamat Supplier').form-control
+								.form-group
+									label
+										| email
+									input(type='text',value='#{email}',name='email',placeholder='Masukkan Email Supplier').form-control
+								.form-group
+									label
+										| phone
+									input(type='text',value='#{telp}',name='telp',placeholder='Masukkan No. Telpon Supplier').form-control
+							.box-footer
+								button(type='submit').btn.btn-primary
+									| Submit
+								a(href='/supplier').btn.btn-primary.pull-right
+									| Back
