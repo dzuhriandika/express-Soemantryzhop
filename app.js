@@ -7,10 +7,7 @@ var bodyParser = require('body-parser');
 var flash = require('express-flash');
 var session = require('express-session');
 var index = require('./routes/index');
-var users = require('./routes/users');
 var barang = require('./routes/barang');
-var supplier = require('./routes/supplier');
-var customers = require('./routes/customers');
 var expressValidator = require('express-validator');
 var methodOverride = require('method-override');
 
@@ -52,15 +49,12 @@ app.use(
         user: 'root', // your mysql user
         password : '', // your mysql password
         port : 3306, //port mysql
-        database:'nodejs' // your database name
+        database:'soemantryzhop' // your database name
     },'pool') //or single
 
 );
 
 app.use('/', index);
-app.use('/customers', customers);
-app.use('/supplier', supplier);
-app.use('/users', users);
 app.use('/barang', barang);
 
 // catch 404 and forward to error handler

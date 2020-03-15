@@ -42,17 +42,17 @@ block content
 					table.table.table-bordered
 						tr
 							th
-								| Kode
-							th
 								| Nama
 							th
-								| Merek
+								| Kategori
 							th
-								| Satuan
+								| Size
 							th
-								| Jumlah
+								| Stok
 							th
 								| Harga
+							th
+								| Image
 							th
 								| Action
 							if messages.msg_error
@@ -60,19 +60,19 @@ block content
 							else
 								for row, index in data 
 									tr
-										td #{row.kode}
-										td #{row.nama}
-										td #{row.merek}
-										td #{row.satuan}
-										td #{row.jumlah}
+										td #{row.name}
+										td #{row.kategori}
+										td #{row.size}
+										td #{row.stok}
 										td #{row.harga}
+										td #{row.image}
 										td
 											div(style='display:inline-block')
-												a(href='/barang/edit/#{row.kode}').btn.btn-sm.btn-primary
+												a(href='/barang/edit/#{row.id}').btn.btn-sm.btn-primary
 														i.fa.fa-edit
 											| 
 											div(style='display:inline-block')
-												form(method='post', action='/barang/delete/#{row.kode}')
+												form(method='post', action='/barang/delete/#{row.id}')
 													input(type="hidden",name="_method", value="DELETE")
 													button.btn.btn-sm.btn-danger(type='submit')
 														i.fa.fa-remove

@@ -14,8 +14,7 @@ html
 			.login-logo
 				a(href='#')
 					b
-						| Admin
-					| LTE
+						| Soemantryzhop
 			.login-box-body
 				p.login-box-msg
 					| Sign in to start your session
@@ -29,34 +28,20 @@ html
 								| Alert! 
 							| !{messages.msg_error}
 					.form-group.has-feedback
-						input(type="email",placeholder="Email",name="txtEmail",value="test@test.com").form-control
+						input(type="email",placeholder="Email",name="txtEmail").form-control
 						span.glyphicon.glyphicon-envelope.form-control-feedback
 					.form-group.has-feedback
-						input(type="password",placeholder="Password",name="txtPassword",value="123456").form-control
+						input(type="password",placeholder="Password",name="txtPassword").form-control
 						span.glyphicon.glyphicon-lock.form-control-feedback
 					.row
 						.col-xs-8
-							.checkbox.icheck
+								.checkbox.icheck
 								label
 									input(type="checkbox")
 									|  Remember Me
 						.col-xs-4
 							button(type="submit").btn.btn-primary.btn-block.btn-flat
 								| Sign In
-				.social-auth-links.text-center
-					p
-						| - OR -
-					a(href='#').btn.btn-block.btn-social.btn-facebook.btn-flat
-						i.fa.fa-facebook
-						| Sign in Using Facebook
-					a(href='#').btn.btn-block.btn-social.btn-google.btn-flat
-						i.fa.fa-google-plus
-						| Sign in using Google+
-				a(href='#')
-					| I forgot my password
-				br
-				a(href='#').text-center
-					|	Register a new membership
 
 script(type='text/javascript', src='/adminlte/plugins/jQuery/jquery-2.2.3.min.js')
 script(type='text/javascript', src='/adminlte/bootstrap/js/bootstrap.min.js')

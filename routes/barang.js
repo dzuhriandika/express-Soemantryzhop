@@ -16,24 +16,24 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-	req.assert('kode', 'Isi kode').notEmpty();
+	req.assert('name', 'Isi name').notEmpty();
 	var errors = req.validationErrors();
 	if (!errors) {
 
-		v_kode = req.sanitize( 'kode' ).escape().trim(); 
-		v_nama = req.sanitize( 'nama' ).escape().trim();
-		v_merek = req.sanitize( 'merek' ).escape().trim();
-		v_satuan = req.sanitize( 'satuan' ).escape().trim();
-		v_jumlah = req.sanitize( 'jumlah' ).escape().trim();
+		v_nama = req.sanitize( 'name' ).escape().trim();
+		v_merek = req.sanitize( 'kategori' ).escape().trim();
+		v_satuan = req.sanitize( 'size' ).escape().trim();
+		v_jumlah = req.sanitize( 'stok' ).escape().trim();
 		v_harga = req.sanitize( 'harga' ).escape().trim();
+		v_image = req.sanitize( 'image' ).escape().trim();
 
 		var barang = {
-			kode: v_kode,
-			nama: v_nama,
-			merek: v_merek,
-            satuan: v_satuan,
-            jumlah: v_jumlah,
-            harga: v_harga
+			name: v_nama,
+			kategori: v_merek,
+            size: v_satuan,
+            stok: v_jumlah,
+            harga: v_harga,
+            image: v_image
 		}
 
 		var insert_sql = 'INSERT INTO barang SET ?';
@@ -45,12 +45,12 @@ router.post('/add', function(req, res, next) {
 					req.flash('msg_error', errors_detail); 
 					res.render('barang/add-barang', 
 					{ 
-						kode: req.param('kode'), 
-						nama: req.param('nama'),
-						merek: req.param('merek'),
-						satuan: req.param('satuan'),
-						jumlah: req.param('jumlah'),
-						harga: req.param('harga')
+						name: req.param('name'),
+						kategori: req.param('kategori'),
+						size: req.param('size'),
+						stok: req.param('stok'),
+						harga: req.param('harga'),
+						image: req.param('image')
 					});
 				}else{
 					req.flash('msg_info', 'Sukses menambah barang'); 
@@ -81,18 +81,18 @@ router.get('/add', function(req, res, next) {
 	res.render(	'barang/add-barang', 
 	{ 
 		title: 'Tambah Barang Baru',
-		kode: '',
-		nama: '',
-		merek: '',
-        satuan: '',
-        jumlah: '',
-        harga: ''
+		name: '',
+		kategori: '',
+        size: '',
+        stok: '',
+        harga: '',
+        image: ''
 	});
 });
 
-router.get('/edit/(:kode)', function(req,res,next){
+router.get('/edit/(:id)', function(req,res,next){
 	req.getConnection(function(err,connection){
-		var query = connection.query('SELECT * FROM barang where kode='+req.params.kode,function(err,rows)
+		var query = connection.query('SELECT * FROM barang where id='+req.params.id,function(err,rows)
 		{
 			if(err)
 			{
@@ -117,27 +117,26 @@ router.get('/edit/(:kode)', function(req,res,next){
 		});
 	});
 });
-router.put('/edit/(:kode)', function(req,res,next){
-	req.assert('kode', 'Isi kode').notEmpty();
+router.put('/edit/(:id)', function(req,res,next){
+	req.assert('name', 'Isi name').notEmpty();
 	var errors = req.validationErrors();
 	if (!errors) {
-		v_kode = req.sanitize( 'kode' ).escape().trim(); 
-		v_nama = req.sanitize( 'nama' ).escape().trim();
-		v_merek = req.sanitize( 'merek' ).escape().trim();
-        v_satuan = req.sanitize( 'satuan' ).escape().trim();
-		v_jumlah = req.sanitize( 'jumlah' ).escape().trim();
-        v_harga = req.sanitize( 'harga' ).escape().trim();
-
+		v_nama = req.sanitize( 'name' ).escape().trim();
+		v_merek = req.sanitize( 'kategori' ).escape().trim();
+		v_satuan = req.sanitize( 'size' ).escape().trim();
+		v_jumlah = req.sanitize( 'stok' ).escape().trim();
+		v_harga = req.sanitize( 'harga' ).escape().trim();
+		v_image = req.sanitize( 'image' ).escape().trim();
 		var barang = {
-			kode: v_kode,
-			nama: v_nama,
-			merek: v_merek,
-            satuan: v_satuan,
-            jumlah: v_jumlah,
-            harga: v_harga
+			name: v_nama,
+			kategori: v_merek,
+            size: v_satuan,
+            stok: v_jumlah,
+            harga: v_harga,
+            image: v_image
 		}
 
-		var update_sql = 'update barang SET ? where kode = '+req.params.kode;
+		var update_sql = 'update barang SET ? where id = '+req.params.id;
 		req.getConnection(function(err,connection){
 			var query = connection.query(update_sql, barang, function(err, result){
 				if(err)
@@ -146,14 +145,16 @@ router.put('/edit/(:kode)', function(req,res,next){
 					req.flash('msg_error', errors_detail); 
 					res.render('barang/edit', 
 					{ 
-						kode: req.param('kode'), 
-						nama: req.param('nama'),
-						merek: req.param('merek'),
-						satuan: req.param('satuan'),
+						name: req.param('name'),
+						kategori: req.param('kategori'),
+						size: req.param('size'),
+						stok: req.param('stok'),
+						harga: req.param('harga'),
+						image: req.param('image')
 					});
 				}else{
 					req.flash('msg_info', 'Sukses update barang'); 
-					res.redirect('/barang/edit/'+req.params.kode);
+					res.redirect('/barang');
 				}		
 			});
 		});
@@ -176,10 +177,10 @@ router.put('/edit/(:kode)', function(req,res,next){
 	}
 });
 
-router.delete('/delete/(:kode)', function(req, res, next) {
+router.delete('/delete/(:id)', function(req, res, next) {
 	req.getConnection(function(err,connection){
 		var barang = {
-			kode: req.params.kode,
+			id: req.params.id,
 		}
 		
 		var delete_sql = 'delete from barang where ?';

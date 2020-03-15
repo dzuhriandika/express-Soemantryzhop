@@ -17,10 +17,10 @@ router.post('/login',function(req,res,next){
 	var errors = req.validationErrors();
 	if (!errors) {
 		req.getConnection(function(err,connection){
-			v_pass = req.sanitize( 'txtPassword' ).escape().trim(); 
-			v_email = req.sanitize( 'txtEmail' ).escape().trim();
+			password = req.sanitize( 'txtPassword' ).escape().trim(); 
+			email = req.sanitize( 'txtEmail' ).escape().trim();
 			
-			var query = connection.query('select * from user where email="'+v_email+'" and password="'+v_pass+'"',function(err,rows)
+			var query = connection.query('select * from user where email="'+email+'" and password="'+password+'"',function(err,rows)
 			{
 				if(err)
 				{
@@ -28,19 +28,19 @@ router.post('/login',function(req,res,next){
 					var errornya  = ("Error Selecting : %s ",err.code );  
 					console.log(err.code);
 					req.flash('msg_error', errornya); 
-					res.redirect('/login'); 
+					res.redirect('/barang'); 
 				}else
 				{
 					if(rows.length <=0)
 					{
 
 						req.flash('msg_error', "Wrong email address or password. Try again."); 
-						res.redirect('/login');
+						res.redirect('/barang');
 					}
 					else
 					{	
 						session_store.is_login = true;
-						res.redirect('/customers');
+						res.redirect('/barang');
 					}
 				}
 
